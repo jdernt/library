@@ -1,0 +1,16 @@
+.read {
+  width: 55%;
+
+  &__title {
+    margin-bottom: 30px;
+  }
+
+  .read__text {
+    max-height: 800px;
+    padding: 10px;
+    color: #000;
+    white-space: pre-wrap;
+    overflow: auto;
+    background-color: $light-sepia;
+  }
+}

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="source/css/styles.css">
+  <title>Document</title>
+</head>
+
+<body>
+  <header class="header">
+    <div class="header__container container">
+      <h1 class="header__title title">
+        <a href="" class="header__link link">
+          Библиотека книг
+        </a>
+      </h1>
+      <nav class="header__nav">
+        <ul class="header__list list">
+          <li class="header__item">
+            <a href="" class="header__link link">
+              Любимые книги
+            </a>
+          </li>
+          <li class="header__item">
+            <a href="" class="header__link link">
+              Мои книги
+            </a>
+          </li>
+          <li class="header__item">
+            <a href="" class="header__link link">
+              Читать
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <main class="main">
+    <div class="body-bg"></div>
+
+    <section class="library">
+      <h2 class="library__title title">Библиотека</h2>
+      <div class="library__container container">
+        <section class="books">
+          <h2 class="books__title title">
+            Мои книги
+          </h2>
+          <div class="books__container">
+          </div>
+        </section>
+        <section class="add">
+          <h2 class="add__title title">
+            Добавить книгу
+          </h2>
+          <form class="add__form">
+            <span class="add__span select-upload">
+              <input type="radio" name="select-form" id="upload-checkbox" checked>
+              <label for="upload-checkbox">Загрузить файл</label>
+            </span>
+            <span class="add__span select-write">
+              <input type="radio" name="select-form" id="write-checkbox">
+              <label for="write-checkbox">Написать</label>
+            </span>
+          </form>
+          <form method="post" enctype="multipart/form-data" accept-charset="UTF-8" class="add__form upload">
+            <label for="upload-title" class="add__label">Название</label>
+            <input type="text" name="login" id="upload-title" class="add__input" required>
+            <input type="file" name="file" class="add__upload" required>
+            <input type="submit" value="Загрузить файл" name="submit" class="add__submit upload-submit">
+          </form>
+          <form method="post" accept-charset="UTF-8" class="add__form write hidden">
+            <label for="write-title" class="add__label">Название</label>
+            <input type="text" name="login" class="add__input" id="write-title" required>
+            <label for="write-descr" class="add__label">Описание</label>
+            <textarea id="write-descr" name="file" cols="30" rows="10" class="add__textarea" required></textarea>
+            <input type="submit" value="Добавить" class="add__submit write-submit">
+          </form>
+         </section>
+         <section class="read hidden">
+          <h2 class="read__title title">
+            book name
+          </h2>
+          <div class="read__text">
+            <script>
+              document.querySelector('.read__text').innerHTML = localStorage.getItem('story');
+            </script>
+          </div>
+         </section>
+      </div>
+    </section>
+  </main>
+  <script src="source/js/main.js"></script>
+</body>
+
+</html>

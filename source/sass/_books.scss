@@ -1,0 +1,83 @@
+.books {
+  width: 35%;
+
+  &__container {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__article {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 30px;
+  }
+
+  &__content {
+    cursor: pointer;
+  }
+
+  &__subtitle {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  &__descr {
+    @include unselectable;
+    max-width: 190px;
+    max-height: 200px;
+    padding: 0 5px;
+    color: #000;
+    font-size: 10px;
+    white-space: pre-line;
+    overflow: hidden;
+    border-radius: 2px;
+    background-color: $light-sepia;
+    box-shadow: 0px 0px 2px 4px $light-sepia;
+  }
+
+  &__buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  &__btn {
+    @include books-btn;
+
+    &:not(:last-child) {
+      margin-bottom: 10px;
+    }
+
+    &:hover {
+      color: $hover-color;
+    }
+  }
+
+  // .to-read {
+  //   background: url('../img/apple.svg') left center / contain no-repeat;
+  // }
+
+  // .edit {
+  //   background: url('../img/edit.svg') left center / contain no-repeat;
+  // }
+
+  // .complete {
+  //   background: url('../img/complete.svg') left center / contain no-repeat;
+  // }
+
+  // .delete {
+  //   background: url('../img/delete.svg') left center / contain no-repeat;
+  // }
+}
+
+.books__content:hover .books__subtitle {
+  color: $hover-color;
+}
+
+.books__content:hover .books__descr {
+  background-color: $sepia;
+  box-shadow: 0px 0px 2px 4px $sepia;
+}
+

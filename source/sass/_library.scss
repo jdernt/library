@@ -1,0 +1,15 @@
+.library {
+  margin-bottom: 100px;
+
+  &__container {
+    display: flex;
+    justify-content: space-between;
+    min-height: 600px;
+    padding: 30px 30px 30px 80px;
+    overflow: hidden;
+  }
+
+  &__title {
+    @include visually-hidden;
+  }
+}

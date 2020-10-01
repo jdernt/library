@@ -1,0 +1,68 @@
+.add {
+  width: 30%;
+
+  &__title {
+    margin-bottom: 30px;
+    text-align: center;
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__span {
+    margin-bottom: 10px;
+
+    &:last-child {
+      margin-bottom: 30px;
+    }
+
+    &:hover {
+      color: $hover-color;
+    }
+  }
+
+  &__submit {
+    @include form-item;
+    align-self: center;
+    margin-top: 20px;
+    padding: 5px 10px;
+    cursor: pointer;
+
+    &:hover {
+      color: #fff;
+      background-color: $hover-color;
+    }
+  }
+
+  &__label {
+    margin-bottom: 10px;
+  }
+
+  &__upload {
+    width: 70%;
+  }
+
+  &__input {
+    @include form-item;
+    width: 70%;
+    margin-bottom: 30px;
+  }
+
+  &__textarea {
+    @include form-item;
+    max-width: 100%;
+    min-width: 100%;
+    min-height: 200px;
+  }
+}
+
+.file-content {
+  max-width: 500px;
+  max-height: 400px;
+  padding: 10px;
+  overflow: auto;
+  white-space: pre-wrap;
+}
+
