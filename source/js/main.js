@@ -21,16 +21,16 @@ function getBooksFromStorage() {
         </div>
       </div>
       <div class="books__buttons">
-        <button class="books__btn to-read">
+        <button class="books__btn to-read-btn">
           Читать
         </button>
-        <button class="books__btn edit">
+        <button class="books__btn edit-btn">
           Редактировать
         </button>
-        <button class="books__btn complete">
+        <button class="books__btn complete-btn">
           Прочитано
         </button>
-        <button class="books__btn delete">
+        <button class="books__btn delete-btn">
           Удалить
         </button>
       </div>
@@ -41,30 +41,76 @@ function getBooksFromStorage() {
 
 getBooksFromStorage();
 
-//функции управления библиотекой
-const allBooks = document.querySelectorAll('.books__article');
-const btns = document.querySelectorAll('.books__buttons');
-const readBtns = document.querySelectorAll('.to-read');
-const editBtns = document.querySelectorAll('.edit');
-const completeBtns = document.querySelectorAll('.complete');
-const deleteBtns = document.querySelectorAll('.delete');
+//управление библиотекой
+const booksBtns = document.querySelectorAll('.books__btn');
 
-//читать книгу
-readBtns.forEach(btn => btn.addEventListener('click', function(e){
+const readSection = document.querySelector('.read');
+const readTitle = document.querySelector('.read__title');
+const readText = document.querySelector('.read__text');
 
+const editSection = document.querySelector('.edit');
+const editForm = document.querySelector('.edit__form');
+const editTextarea = document.querySelector('.edit__textarea');
 
-}));
+function removeSideSections() {
+  editSection.classList.add('hidden');
+  readSection.classList.add('hidden');
+};
 
-//удалить книгу
-deleteBtns.forEach(btn => btn.addEventListener('click', function(e){
-  const target = e.target;
-  const article = target.parentNode.parentNode;
+function libraryControls() {
+  const article = this.parentNode.parentNode;
   const title = article.childNodes[1].childNodes[1].textContent.replace(/[\n\r]+|[\s]{2,}/g, ' ').trim();
 
-  article.remove();
-  localStorage.removeItem(title);
-  console.log(localStorage.getItem(title));
-}))
+  if (this.classList.contains('delete-btn')) {
+    removeSideSections();
+
+    article.remove();
+    localStorage.removeItem(title);
+  };
+  if (this.classList.contains('complete-btn')) {
+    if (document.querySelector('.finished') == null) {
+      removeSideSections();
+
+      let finished = document.createElement('div');
+      finished.classList.add('finished');
+      article.appendChild(finished);
+    };
+  };
+  if (this.classList.contains('edit-btn')) {
+    removeSideSections();
+
+    editSection.classList.remove('hidden');
+    editTextarea.value = localStorage.getItem(title);
+
+    editForm.addEventListener('submit', function(e){
+      e.preventDefault();
+      if (editTextarea.value !== '') {
+        localStorage.setItem(title, editTextarea.value);
+        editSection.classList.add('hidden');
+        getBooksFromStorage();
+      };
+    });
+  };
+  if (this.classList.contains('to-read-btn')) {
+    removeSideSections();
+
+    readSection.classList.remove('hidden');
+    readTitle.textContent = title;
+    readText.textContent = localStorage.getItem(title);
+  };
+};
+
+booksBtns.forEach(btn => btn.addEventListener('click', libraryControls));
+
+const booksContent = document.querySelectorAll('.books__content');
+
+booksContent.forEach(book => book.addEventListener('click', function(){
+  const title = this.childNodes[1].textContent.replace(/[\n\r]+|[\s]{2,}/g, ' ').trim();
+
+  readSection.classList.remove('hidden');
+  readTitle.textContent = title;
+  readText.textContent = localStorage.getItem(title);
+}));
 
 // отправка данных на сервер
 const url = 'https://apiinterns.osora.ru/ ';
@@ -84,6 +130,10 @@ uploadForm.onsubmit = async (e) => {
 
     let result = await response.json();
     console.log(result);
+
+    const filePreview = document.querySelector('.add__preview');
+    filePreview.classList.remove('hidden');
+    filePreview.innerHTML = result.text;
 
     localStorage.setItem(`${fileName.value}`, result.text);
     fileName.value = '';
@@ -106,49 +156,17 @@ writeForm.onsubmit = async (e) => {
   };
 };
 
-// uploadForm.addEventListener('submit', (e) => {
-//   e.preventDefault();
+//добавить книгу
+const addBtn = document.querySelector('.add-book');
+const librarySection = document.querySelector('.library');
+const addSection = document.querySelector('.add');
 
-//   const fileName = document.querySelector('#upload-title').value;
-//   const file = document.querySelector('[type=file]').files[0];
+addBtn.addEventListener('click', function(){
+  librarySection.classList.add('hidden');
+  addSection.classList.remove('hidden');
+});
 
-//   fetch(url, {
-//     method: 'POST',
-//     body: new FormData(uploadForm),
-//   }).then((response) => {
-//     console.log(response.json);
-//   });
-
-//   // let reader = new FileReader();
-
-//   // let div = document.createElement('div');
-//   // div.classList.add('file-content');
-
-//   // reader.readAsText(file, 'utf-8');
-//   // reader.onload = function() {
-//   //   div.innerHTML = reader.result;
-//   //   document.querySelector('.main').appendChild(div);
-//   // };
-
-//   // localStorage.setItem(`${fileName}`, );
-// });
-
-// writeForm.addEventListener('submit', (e) => {
-//   e.preventDefault();
-
-//   const fileName = document.querySelector('#write-title').value;
-
-//   fetch(url, {
-//     method: 'POST',
-//     body: new FormData(writeForm),
-//   }).then((response) => {
-//     console.log(response);
-//   });
-
-//   // localStorage.setItem(`${fileName}`, );
-// });
-
-// Переключение между формами
+//переключение между формами
 const uploadCheckbox = document.querySelector('#upload-checkbox');
 const writeCheckbox = document.querySelector('#write-checkbox');
 

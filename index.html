@@ -47,13 +47,38 @@
           <h2 class="books__title title">
             Мои книги
           </h2>
+          <button class="books__btn add-book">+</button>
           <div class="books__container">
           </div>
         </section>
-        <section class="add">
-          <h2 class="add__title title">
-            Добавить книгу
+        <section class="favs">
+          <h2 class="favs__title title">
+            Любимые книги
           </h2>
+        </section>
+        <section class="edit hidden">
+          <h2 class="edit__title title">
+            Редактировать
+          </h2>
+          <form class="edit__form">
+            <textarea cols="30" rows="10" class="edit__textarea" required></textarea>
+            <input type="submit" value="Сохранить" class="edit__submit">
+          </form>
+        </section>
+        <section class="read hidden">
+          <h2 class="read__title title">
+          </h2>
+          <div class="read__text">
+          </div>
+        </section>
+      </div>
+    </section>
+    <section class="add hidden">
+      <div class="add__container container">
+        <h2 class="add__title title">
+          Добавить книгу
+        </h2>
+        <div class="add__forms-container">
           <form class="add__form">
             <span class="add__span select-upload">
               <input type="radio" name="select-form" id="upload-checkbox" checked>
@@ -77,19 +102,11 @@
             <textarea id="write-descr" name="file" cols="30" rows="10" class="add__textarea" required></textarea>
             <input type="submit" value="Добавить" class="add__submit write-submit">
           </form>
-         </section>
-         <section class="read hidden">
-          <h2 class="read__title title">
-            book name
-          </h2>
-          <div class="read__text">
-            <script>
-              document.querySelector('.read__text').innerHTML = localStorage.getItem('story');
-            </script>
-          </div>
-         </section>
+        </div>
+        <div class="add__preview hidden">
+        </div>
       </div>
-    </section>
+     </section>
   </main>
   <script src="source/js/main.js"></script>
 </body>

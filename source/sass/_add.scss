@@ -1,9 +1,21 @@
 .add {
-  width: 30%;
+
+  &__container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    min-height: 600px;
+    padding: 30px 80px;
+  }
 
   &__title {
+    width: 100%;
     margin-bottom: 30px;
     text-align: center;
+  }
+
+  &__forms-container {
+    width: 30%;
   }
 
   &__form {
@@ -56,13 +68,15 @@
     min-width: 100%;
     min-height: 200px;
   }
-}
 
-.file-content {
-  max-width: 500px;
-  max-height: 400px;
-  padding: 10px;
-  overflow: auto;
-  white-space: pre-wrap;
+  &__preview {
+    max-width: 500px;
+    max-height: 400px;
+    padding: 10px;
+    color: #000;
+    overflow: auto;
+    white-space: pre-wrap;
+    background-color: $light-sepia;
+  }
 }
 
