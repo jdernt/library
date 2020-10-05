@@ -11,7 +11,7 @@ function getBooksFromStorage() {
     descrArr[i] = localStorage.getItem(localStorage.key(i));
 
     books.insertAdjacentHTML('beforeend', `
-    <article class="books__article">
+    <article class="books__article" draggable="true">
       <div class="books__content">
         <h3 class="books__subtitle subtitle">
           ${titleArr[i]}
@@ -194,4 +194,30 @@ writeCheckbox.addEventListener('click', function(){
   } else {
     switchToUpload();
   };
+});
+
+// drag and drop
+const favBooks = document.querySelector('.favs__container');
+const booksArticle = document.querySelectorAll('.books__article');
+
+booksArticle.forEach(book => book.addEventListener('dragstart', function(){
+  book.classList.add('selected');
+}));
+
+favBooks.addEventListener('dragover', function(e){
+  e.preventDefault();
+
+  favBooks.classList.add('over');
+});
+
+favBooks.addEventListener('dragleave', function(){
+  favBooks.classList.remove('over');
+});
+
+favBooks.addEventListener('drop', function(){
+  favBooks.classList.remove('over');
+
+  const activeItem = document.querySelector('.selected');
+  favBooks.append(activeItem);
+  activeItem.classList.remove('selected');
 });
