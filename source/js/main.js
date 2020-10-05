@@ -60,6 +60,7 @@ function removeSideSections() {
 function libraryControls() {
   const article = this.parentNode.parentNode;
   const title = article.childNodes[1].childNodes[1].textContent.replace(/[\n\r]+|[\s]{2,}/g, ' ').trim();
+  const descr = article.childNodes[1].childNodes[3];
 
   if (this.classList.contains('delete-btn')) {
     removeSideSections();
@@ -68,14 +69,13 @@ function libraryControls() {
     localStorage.removeItem(title);
   };
   if (this.classList.contains('complete-btn')) {
-    if (article.children.length <=2) {
+    if (article.children.length <= 2) {
       removeSideSections();
 
       let finished = document.createElement('div');
       finished.classList.add('finished');
       article.appendChild(finished);
-    }
-
+    };
   };
   if (this.classList.contains('edit-btn')) {
     removeSideSections();
@@ -83,12 +83,14 @@ function libraryControls() {
     editSection.classList.remove('hidden');
     editTextarea.value = localStorage.getItem(title);
 
-    editForm.addEventListener('submit', function(e){
+    editForm.addEventListener('submit', (e) => {
       e.preventDefault();
+      console.log(this);
+
       if (editTextarea.value !== '') {
         localStorage.setItem(title, editTextarea.value);
+        descr.textContent = editTextarea.value;
         editSection.classList.add('hidden');
-        getBooksFromStorage();
       };
     });
   };
@@ -101,7 +103,9 @@ function libraryControls() {
   };
 };
 
-booksBtns.forEach(btn => btn.addEventListener('click', libraryControls));
+booksBtns.forEach((btn) => {
+  btn.onclick = libraryControls;
+});
 
 const booksContent = document.querySelectorAll('.books__content');
 
