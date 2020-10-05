@@ -1,6 +1,10 @@
 .favs {
   width: 25%;
 
+  &__title {
+    margin-bottom: 30px;
+  }
+
   &__container {
     height: 100%;
   }
