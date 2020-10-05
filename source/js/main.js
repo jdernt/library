@@ -57,10 +57,14 @@ function removeSideSections() {
   readSection.classList.add('hidden');
 };
 
+let article;
+let title;
+let descr;
+
 function libraryControls() {
-  const article = this.parentNode.parentNode;
-  const title = article.childNodes[1].childNodes[1].textContent.replace(/[\n\r]+|[\s]{2,}/g, ' ').trim();
-  const descr = article.childNodes[1].childNodes[3];
+  article = this.parentNode.parentNode;
+  title = article.childNodes[1].childNodes[1].textContent.replace(/[\n\r]+|[\s]{2,}/g, ' ').trim();
+  descr = article.childNodes[1].childNodes[3];
 
   if (this.classList.contains('delete-btn')) {
     removeSideSections();
@@ -82,17 +86,6 @@ function libraryControls() {
 
     editSection.classList.remove('hidden');
     editTextarea.value = localStorage.getItem(title);
-
-    editForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      console.log(this);
-
-      if (editTextarea.value !== '') {
-        localStorage.setItem(title, editTextarea.value);
-        descr.textContent = editTextarea.value;
-        editSection.classList.add('hidden');
-      };
-    });
   };
   if (this.classList.contains('to-read-btn')) {
     removeSideSections();
@@ -102,6 +95,16 @@ function libraryControls() {
     readText.textContent = localStorage.getItem(title);
   };
 };
+
+editForm.addEventListener('submit', (e) => {
+  e.preventDefault();
+
+  if (editTextarea.value !== '') {
+    localStorage.setItem(title, editTextarea.value);
+    descr.textContent = editTextarea.value;
+    editSection.classList.add('hidden');
+  };
+});
 
 booksBtns.forEach((btn) => {
   btn.onclick = libraryControls;
@@ -134,7 +137,6 @@ uploadForm.onsubmit = async (e) => {
     });
 
     let result = await response.json();
-    console.log(result);
 
     const filePreview = document.querySelector('.add__preview');
     filePreview.classList.remove('hidden');
