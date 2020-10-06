@@ -126,22 +126,11 @@ function libraryControls() {
   descr = article.querySelector('.books__descr');
 
   if (this.classList.contains('delete-btn')) {
-    removeSideSections();
-
-    article.remove();
-    localStorage.removeItem(title);
+    deleteBook();
   };
   if (this.classList.contains('complete-btn')) {
     if (article.children.length <= 2) {
-      removeSideSections();
-
-      let finished = document.createElement('div');
-      finished.classList.add('finished');
-      article.appendChild(finished);
-
-      // let index = bookObj.title.indexOf(title);
-      // bookObj.status[index] = 'read';
-      // toJson();
+      completeBook();
     };
   };
   if (this.classList.contains('edit-btn')) {
@@ -157,6 +146,25 @@ function libraryControls() {
     readTitle.textContent = title;
     readText.textContent = localStorage.getItem(title);
   };
+};
+
+function completeBook() {
+  removeSideSections();
+
+  let finished = document.createElement('div');
+  finished.classList.add('finished');
+  article.appendChild(finished);
+
+  // let index = bookObj.title.indexOf(title);
+  // bookObj.status[index] = 'read';
+  // toJson();
+};
+
+function deleteBook() {
+  removeSideSections();
+
+  article.remove();
+  localStorage.removeItem(title);
 };
 
 editForm.addEventListener('submit', (e) => {
