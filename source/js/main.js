@@ -177,14 +177,16 @@ editForm.addEventListener('submit', (e) => {
   };
 });
 
+//
 booksBtns.forEach((btn) => {
   btn.onclick = libraryControls;
 });
 
+//
 const booksContent = document.querySelectorAll('.books__content');
 
 booksContent.forEach(book => book.addEventListener('click', function(){
-  const title = this.childNodes[1].textContent.replace(/[\n\r]+|[\s]{2,}/g, ' ').trim();
+  const title = this.querySelector('.books__subtitle').textContent.replace(/[\n\r]+|[\s]{2,}/g, ' ').trim();
 
   readSection.classList.remove('hidden');
   readTitle.textContent = title;
