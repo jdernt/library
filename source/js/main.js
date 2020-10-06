@@ -37,6 +37,8 @@ function getBooksFromStorage() {
     </article>
     `)
   };
+
+  dragAndDrop();
 };
 
 getBooksFromStorage();
@@ -164,7 +166,8 @@ writeForm.onsubmit = async (e) => {
 };
 
 //добавить книгу
-const addBtn = document.querySelector('.add-book');
+const addBtn = document.querySelector('.add-book-btn');
+const myBooksLink = document.querySelector('.my-books-link');
 const librarySection = document.querySelector('.library');
 const addSection = document.querySelector('.add');
 
@@ -172,6 +175,13 @@ addBtn.addEventListener('click', function(){
   librarySection.classList.add('hidden');
   addSection.classList.remove('hidden');
 });
+
+myBooksLink.addEventListener('click', function(e){
+  e.preventDefault();
+
+  librarySection.classList.remove('hidden');
+  addSection.classList.add('hidden');
+})
 
 //переключение между формами
 const uploadCheckbox = document.querySelector('#upload-checkbox');
@@ -204,34 +214,37 @@ writeCheckbox.addEventListener('click', function(){
 });
 
 // drag and drop
-const favBooks = document.querySelector('.favs__container');
-const booksArticle = document.querySelectorAll('.books__article');
+function dragAndDrop(){
+  const favBooks = document.querySelector('.favs__container');
+  const booksArticle = document.querySelectorAll('.books__article');
 
-booksArticle.forEach((book) => {
-  book.addEventListener('dragstart', function(){
-    book.classList.add('selected');
+  booksArticle.forEach((book) => {
+    book.addEventListener('dragstart', function(){
+      book.classList.add('selected');
+    });
+
+    book.addEventListener('dragend', function(){
+      book.classList.remove('selected');
+    });
   });
 
-  book.addEventListener('dragend', function(){
-    book.classList.remove('selected');
+  favBooks.addEventListener('dragover', function(e){
+    e.preventDefault();
+
+    favBooks.classList.add('over');
   });
-});
 
-favBooks.addEventListener('dragover', function(e){
-  e.preventDefault();
+  favBooks.addEventListener('dragleave', function(){
+    favBooks.classList.remove('over');
+  });
 
-  favBooks.classList.add('over');
-});
+  favBooks.addEventListener('drop', function(){
+    favBooks.classList.remove('over');
 
-favBooks.addEventListener('dragleave', function(){
-  favBooks.classList.remove('over');
-});
+    const activeItem = document.querySelector('.selected');
 
-favBooks.addEventListener('drop', function(){
-  favBooks.classList.remove('over');
+    favBooks.append(activeItem);
+  });
+};
 
-  const activeItem = document.querySelector('.selected');
-
-  favBooks.append(activeItem);
-  activeItem.classList.remove('selected');
-});
+dragAndDrop();
