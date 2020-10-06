@@ -2,46 +2,103 @@
 const books = document.querySelector('.books__container');
 let titleArr = [];
 let descrArr = [];
+let statusArr = [];
+let categoryArr = [];
+
+let bookObj= {};
+let json;
+
+function toJson() {
+  json = JSON.stringify(bookObj);
+  localStorage.setItem('json', json);
+}
 
 function getBooksFromStorage() {
   books.innerHTML = '';
 
   for (i = 0; i < localStorage.length; i++) {
-    titleArr[i] = localStorage.key(i);
-    descrArr[i] = localStorage.getItem(localStorage.key(i));
+    if (localStorage.key(i) !== 'json') {
+      titleArr[i] = localStorage.key(i);
+      descrArr[i] = localStorage.getItem(localStorage.key(i));
+      statusArr[i] = 'unread';
+      categoryArr[i] = 'all books';
 
-    books.insertAdjacentHTML('beforeend', `
-    <article class="books__article" draggable="true">
-      <div class="books__content">
-        <h3 class="books__subtitle subtitle">
-          ${titleArr[i]}
-        </h3>
-        <div class="books__descr">
-          ${descrArr[i]}
+      // bookObj = {
+      //   title: titleArr,
+      //   category: categoryArr,
+      //   status: statusArr,
+      //   text: descrArr
+      // };
+
+      books.insertAdjacentHTML('beforeend', `
+      <article class="books__article" draggable="true">
+        <div class="books__content">
+          <h3 class="books__subtitle subtitle">
+            ${titleArr[i]}
+          </h3>
+          <div class="books__descr">
+            ${descrArr[i]}
+          </div>
         </div>
-      </div>
-      <div class="books__buttons">
-        <button class="books__btn to-read-btn">
-          Читать
-        </button>
-        <button class="books__btn edit-btn">
-          Редактировать
-        </button>
-        <button class="books__btn complete-btn">
-          Прочитано
-        </button>
-        <button class="books__btn delete-btn">
-          Удалить
-        </button>
-      </div>
-    </article>
-    `)
+        <div class="books__buttons">
+          <button class="books__btn to-read-btn">
+            Читать
+          </button>
+          <button class="books__btn edit-btn">
+            Редактировать
+          </button>
+          <button class="books__btn complete-btn">
+            Прочитано
+          </button>
+          <button class="books__btn delete-btn">
+            Удалить
+          </button>
+        </div>
+      </article>
+      `);
+
+      // toJson();
+    };
   };
 
   dragAndDrop();
 };
 
-getBooksFromStorage();
+// if (localStorage.getItem('json') !== null) {
+//   bookObj = JSON.parse(localStorage.getItem('json'));
+//   for (i = 0; i < bookObj.title.length; i++) {
+//     if (bookObj.category[i] === 'all books') {
+//       books.insertAdjacentHTML('beforeend', `
+//       <article class="books__article" draggable="true">
+//         <div class="books__content">
+//           <h3 class="books__subtitle subtitle">
+//             ${bookObj.title[i]}
+//           </h3>
+//           <div class="books__descr">
+//             ${bookObj.text[i]}
+//           </div>
+//         </div>
+//         <div class="books__buttons">
+//           <button class="books__btn to-read-btn">
+//             Читать
+//           </button>
+//           <button class="books__btn edit-btn">
+//             Редактировать
+//           </button>
+//           <button class="books__btn complete-btn">
+//             Прочитано
+//           </button>
+//           <button class="books__btn delete-btn">
+//             Удалить
+//           </button>
+//         </div>
+//       </article>
+//       `)
+//     };
+//   };
+// } else {
+  getBooksFromStorage();
+// };
 
 //управление библиотекой
 const booksBtns = document.querySelectorAll('.books__btn');
@@ -81,6 +138,10 @@ function libraryControls() {
       let finished = document.createElement('div');
       finished.classList.add('finished');
       article.appendChild(finished);
+
+      // let index = bookObj.title.indexOf(title);
+      // bookObj.status[index] = 'read';
+      // toJson();
     };
   };
   if (this.classList.contains('edit-btn')) {
@@ -162,6 +223,8 @@ writeForm.onsubmit = async (e) => {
     localStorage.setItem(`${fileName.value}`, fileDescr.value);
     fileName.value = '';
     fileDescr.value = '';
+
+    getBooksFromStorage();
   };
 };
 
