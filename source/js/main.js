@@ -62,9 +62,9 @@ let title;
 let descr;
 
 function libraryControls() {
-  article = this.parentNode.parentNode;
-  title = article.childNodes[1].childNodes[1].textContent.replace(/[\n\r]+|[\s]{2,}/g, ' ').trim();
-  descr = article.childNodes[1].childNodes[3];
+  article = this.closest('.books__article');
+  title = article.querySelector('.books__subtitle').textContent.replace(/[\n\r]+|[\s]{2,}/g, ' ').trim();
+  descr = article.querySelector('.books__descr');
 
   if (this.classList.contains('delete-btn')) {
     removeSideSections();
