@@ -326,6 +326,7 @@ function completeBook() {
   let finished = document.createElement('div');
   finished.classList.add('finished');
   article.appendChild(finished);
+  article.dataset.status = 'read';
 
   let index = bookObj.title.indexOf(title);
   bookObj.status[index] = 'read';
