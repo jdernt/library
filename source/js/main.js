@@ -148,6 +148,8 @@ function createBook(fileName, fileText) {
   booksBtns.forEach((btn) => {
     btn.onclick = libraryControls;
   });
+
+  dragAndDrop();
 };
 
 // сортировка
